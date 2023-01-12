@@ -1,5 +1,13 @@
-body{
+*,*::before,*::after{
+  box-sizing: border-box;
+}
 
+body{
   margin:0;
   background: linear-gradient(to right,rgb(239, 14, 51),rgb(232, 31, 232),rgb(22, 22, 246));
+}
+
+.calculator-grid{
+  display: grid;
+  margin-top: 2rem;
 }
