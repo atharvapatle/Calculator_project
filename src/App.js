@@ -1,6 +1,7 @@
 import {useReducer} from 'react'
 import "./App.css"
 import DigitButton from './digitButton'
+import OperationButton from './operationButton'
 
 
 
@@ -15,22 +16,50 @@ export const ACTION={
 // Dispatch will give/pass value to the reducer function to do work!
 
 function reducer(state,{type,payload}) { // type is a string and payload is a object inside the object!!!
+  
   switch(type){
     case ACTION.ADD_DIGIT:
+      if (payload.digit==="0" && state.currOperand==="0") {
+        return state;
+      }
+      if (payload.digit==="." && state.currOperand.includes(".")) {
+        return state;
+      }
       return{          // this will return a datatype of which we've passed to the useReducer 
             ...state,           // we are gonna return a new state object here
-            currOperand: `${currOperand || ""}${payload.digit}` //
+            currOperand: `${state.currOperand || ""}${payload.digit}` // we'll use state.currOperand s state is an object!!!
             // here we are adding a digig to the end (when we do a typing digit just concate from backwards)
             //Here we are just adding/concating two strings , when we use dispatch!//we'll pass payload.dogit to the reducer
       }
+      case ACTION.CLEAR: return{
+        
+      }
+      case ACTION.CHOOSE_OPERATION: 
+      if(state.currOperand==null && state.prevOperand==null) return state;
+      if(state.prevOperand==null) return{
+        ...state,
+        operation:payload.operation,
+        prevOperand:state.currOperand,
+        currOperand:null
+      }
+      return{
+        ...state,
+        prevOperand:evaluate(state),
+        operation:state.operation,
+        currOperand:null,
+
+      }
+     
   }
+}
+function evaluate({currOperand,prevOperand,operation}){
+  
 }
 
 function App() {
 
   const [{currOperand,prevOperand,operation},dispatch]=useReducer(reducer,{});
 
-  dispatch({type:ACTION.ADD_DIGIT , payload:{digit:1}})
 
   return (
     <div className="calculator-grid">
@@ -38,23 +67,23 @@ function App() {
         <div className="previous-operand">{prevOperand} {operation} </div>  
            <div className="current-operand">{currOperand}</div>  
           </div>
-          <button className="span-two">AC</button>        
+          <button className="span-two" onClick={()=> dispatch({type:ACTION.CLEAR})}>AC</button>        
           <button>DEL</button>
-          <button>/</button>
-          <button>1</button>
-          <button>2</button>
-          <button>3</button>
-          <button>*</button>
-          <button>4</button>
-          <button>5</button>
-          <button>6</button>
-          <button>+</button>
-          <button>7</button>
-          <button>8</button>
-          <button>9</button>
-          <button>-</button>
-          <button>.</button>
-          <button>0</button>
+          <OperationButton operation="/" dispatch={dispatch}/>
+          <DigitButton digit="1" dispatch={dispatch}/>
+          <DigitButton digit="2" dispatch={dispatch}/>
+          <DigitButton digit="3" dispatch={dispatch}/>
+          <OperationButton operation="*" dispatch={dispatch}/>
+          <DigitButton digit="4" dispatch={dispatch}/>
+          <DigitButton digit="5" dispatch={dispatch}/>
+          <DigitButton digit="6" dispatch={dispatch}/>
+          <OperationButton operation="+" dispatch={dispatch}/>
+          <DigitButton digit="7" dispatch={dispatch}/>
+          <DigitButton digit="8" dispatch={dispatch}/>
+          <DigitButton digit="9" dispatch={dispatch}/>
+          <OperationButton operation="-" dispatch={dispatch}/>
+          <DigitButton digit="." dispatch={dispatch}/>
+          <DigitButton digit="0" dispatch={dispatch}/>
           <button className="span-two">=</button>
       
     </div>
