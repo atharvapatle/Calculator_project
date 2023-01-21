@@ -19,6 +19,7 @@ body{
   grid-column: span 2;
 }
 
+
 .output{
   display:flex;
   flex-direction: column;
@@ -29,6 +30,8 @@ body{
   padding: .5rem;
   word-wrap: break-word;
   word-break: break-all;/*allows us to wrap*/
+  
+  
 }
 
 .previous-operand{
@@ -44,9 +47,10 @@ body{
   font-size: 1.75rem;
   border: 1.5px solid rgb(208, 183, 183);
   background-color: rgba(111, 185, 185, 0.75);
-  border-radius: 3px;
+  border-radius: 6px;
 }
 .calculator-grid > button:hover,
 .calculator-grid > button:focus{
   background-color: rgba(224, 229, 229, 0.75);
+  
 }
