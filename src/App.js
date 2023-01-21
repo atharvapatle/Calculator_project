@@ -102,6 +102,7 @@ function reducer(state, { type, payload }) { // type is a string and payload is 
 
   }
 }
+
 function evaluate({ currOperand, prevOperand, operation }) {
   const prev = parseFloat(prevOperand); //parseFloat() picks the longest substring starting from the beginning that generates a valid number literal
   const cur = parseFloat(currOperand);
